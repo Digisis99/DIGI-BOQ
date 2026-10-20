@@ -40,7 +40,7 @@
       box-sizing: border-box;
     }
 
-    /* Cover Page Styling Fixed for Vertical Balance */
+    /* Cover Page Styling */
     .cover-page {
       display: flex;
       flex-direction: column;
@@ -208,16 +208,16 @@
       outline: none;
     }
 
-    /* Tables & Column Width Adjustments */
+    /* Standard BOQ Table & Strict Width Layout */
     .table-boq {
       width: 100%;
-      table-layout: fixed;
+      table-layout: fixed !important;
       border-collapse: collapse;
       margin-bottom: 15px;
     }
     .table-boq th, .table-boq td {
       border: 1px solid var(--border-color);
-      padding: 6px 5px;
+      padding: 6px 4px;
       vertical-align: middle;
       word-wrap: break-word;
       overflow-wrap: break-word;
@@ -265,6 +265,7 @@
       overflow: hidden;
       display: block;
       padding: 2px;
+      box-sizing: border-box;
     }
     
     .table-boq textarea.desc-input {
@@ -439,11 +440,16 @@
       <h5 class="fw-bold text-dark text-center my-4" style="letter-spacing: 1px;">BOQ SUMMARY SHEET</h5>
 
       <table class="table-boq mb-4" id="summaryTable">
+        <colgroup>
+          <col style="width: 18%;">
+          <col style="width: 50%;">
+          <col style="width: 32%;">
+        </colgroup>
         <thead>
           <tr>
-            <th style="width: 18%;">BILL NO</th>
-            <th style="width: 50%;">WORK DESCRIPTION / CATEGORY</th>
-            <th style="width: 32%;" class="text-end">TOTAL AMOUNT (LKR)</th>
+            <th>BILL NO</th>
+            <th>WORK DESCRIPTION / CATEGORY</th>
+            <th class="text-end">TOTAL AMOUNT (LKR)</th>
           </tr>
         </thead>
         <tbody id="summaryTableBody">
@@ -485,6 +491,17 @@
     <div class="a4-page mt-4">
       
       <table class="table-boq" id="boqTable">
+        <!-- Strict Standard Column Width Control -->
+        <colgroup>
+          <col style="width: 6%;">
+          <col style="width: 50%;">
+          <col style="width: 6%;">
+          <col style="width: 10%;">
+          <col style="width: 13%;">
+          <col style="width: 15%;">
+          <col class="no-print" style="width: 30px;">
+        </colgroup>
+        
         <!-- Repeatable Header across multi-page prints -->
         <thead class="repeatable-header">
           <tr>
@@ -502,13 +519,13 @@
             </td>
           </tr>
           <tr>
-            <th style="width: 5%;">ITEM</th>
-            <th style="width: 52%;">WORK DESCRIPTION & SPECIFICATION</th>
-            <th style="width: 6%;">UNIT</th>
-            <th style="width: 9%;">QTY</th>
-            <th style="width: 12%;">RATE (LKR)</th>
-            <th style="width: 13%;">AMOUNT (LKR)</th>
-            <th style="width: 3%;" class="no-print"></th>
+            <th>ITEM</th>
+            <th>WORK DESCRIPTION & SPECIFICATION</th>
+            <th>UNIT</th>
+            <th>QTY</th>
+            <th>RATE (LKR)</th>
+            <th>AMOUNT (LKR)</th>
+            <th class="no-print"></th>
           </tr>
         </thead>
         <tbody id="boqBody">
