@@ -19,26 +19,28 @@
       font-family: 'Inter', sans-serif;
       background-color: #f1f5f9;
       color: #0f172a;
-      font-size: 13.5px;
+      font-size: 13px;
       -webkit-user-select: none;
       user-select: none;
     }
 
     .booklet-container {
-      max-width: 920px;
+      max-width: 900px;
       margin: 20px auto;
     }
 
     .a4-page {
       background: #ffffff;
-      padding: 40px;
+      padding: 40px 45px;
       margin-bottom: 25px;
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      min-height: 1100px;
+      min-height: 1120px;
       position: relative;
+      box-sizing: border-box;
     }
 
+    /* Cover Page Styling */
     .cover-page {
       display: flex;
       flex-direction: column;
@@ -47,6 +49,7 @@
       padding: 60px 40px 50px 60px;
       position: relative;
       overflow: hidden;
+      min-height: 1120px;
     }
 
     .cover-side-design {
@@ -60,14 +63,14 @@
 
     .cover-main-content {
       text-align: center;
-      margin-top: 140px;
+      margin-top: 120px;
       margin-bottom: auto;
       position: relative;
       z-index: 2;
     }
 
     .cover-doc-title {
-      font-size: 42px;
+      font-size: 40px;
       font-weight: 900;
       color: var(--brand-navy);
       letter-spacing: 2px;
@@ -84,14 +87,14 @@
       border: 2px solid var(--brand-navy);
       border-left: 10px solid var(--brand-navy);
       border-radius: 10px;
-      padding: 26px 32px;
+      padding: 24px 30px;
       display: block;
       max-width: 92%;
       margin: 0 auto;
       box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
     }
     .cover-project-label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       color: var(--brand-gold);
       text-transform: uppercase;
@@ -99,7 +102,7 @@
       margin-bottom: 8px;
     }
     .cover-project-name {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--brand-navy);
       line-height: 1.35;
@@ -135,27 +138,29 @@
       outline: none;
     }
 
+    /* Header Component */
     .brand-header {
       border-bottom: 3px solid var(--brand-navy);
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       margin-bottom: 20px;
+      width: 100%;
     }
     .editable-header-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--brand-navy);
       letter-spacing: 1px;
       outline: none;
     }
     .editable-header-sub {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 600;
       color: #475569;
       text-transform: uppercase;
       outline: none;
     }
     .editable-header-contact {
-      font-size: 10.5px;
+      font-size: 10px;
       color: #334155;
       text-align: right;
       outline: none;
@@ -165,7 +170,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
     .detail-card {
       background: #f8fafc;
@@ -176,7 +181,7 @@
     }
     .detail-card.span-2 { grid-column: span 2; }
     .card-label {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
@@ -186,53 +191,63 @@
       width: 100%;
       border: none;
       background: transparent;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       color: #0f172a;
       outline: none;
     }
 
+    /* Tables & Repeatable Headers */
     .table-boq {
       width: 100%;
       table-layout: fixed;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     .table-boq th, .table-boq td {
       border: 1px solid var(--border-color);
-      padding: 8px 5px;
+      padding: 6px 5px;
       vertical-align: middle;
       word-wrap: break-word;
       overflow-wrap: break-word;
-      white-space: normal !important;
     }
     .table-boq th {
       background-color: #f1f5f9 !important;
       color: var(--brand-navy);
       font-weight: 800;
-      font-size: 11px;
+      font-size: 10.5px;
       text-transform: uppercase;
       text-align: center;
     }
+
+    /* Printable Header Repeating Mechanism */
+    thead.repeatable-header {
+      display: table-header-group;
+    }
+
+    tr {
+      page-break-inside: avoid;
+    }
+
     .section-header-row td {
       background-color: #1e293b !important;
       color: #ffffff !important;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 11.5px;
     }
     .section-header-row input { color: #ffffff !important; font-weight: 700; }
     .section-total-row td {
       background-color: #f8fafc !important;
       font-weight: 700;
       border-top: 2px solid #cbd5e1;
-      font-size: 12.5px;
+      font-size: 12px;
     }
 
     .table-boq textarea, .table-boq input {
       border: none;
       background: transparent;
       width: 100%;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       color: #0f172a;
       outline: none;
@@ -249,56 +264,70 @@
     }
 
     .summary-box {
-      width: 400px;
+      width: 380px;
       margin-left: auto;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       overflow: hidden;
       background: #ffffff;
+      page-break-inside: avoid;
     }
     .summary-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 15px;
+      padding: 8px 12px;
       border-bottom: 1px solid #e2e8f0;
-      font-size: 13px;
+      font-size: 12.5px;
     }
     .summary-row.grand-total {
       background-color: var(--brand-navy);
       color: #ffffff;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 14px;
       border-bottom: none;
     }
 
     .contingency-percent-input {
-      width: 48px;
+      width: 45px;
       border: 1px solid #cbd5e1;
       border-radius: 4px;
       text-align: center;
       font-weight: 700;
-      padding: 2px 0;
+      padding: 1px 0;
       margin-left: 5px;
     }
 
+    /* Print Specific Strict Styles */
     @page {
       size: A4 portrait;
-      margin: 0;
+      margin: 10mm 8mm 10mm 8mm;
     }
 
     @media print {
-      body { background-color: #ffffff !important; font-size: 11.5px !important; }
-      .booklet-container { max-width: 100% !important; margin: 0 !important; }
+      body {
+        background-color: #ffffff !important;
+        font-size: 11px !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .booklet-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+      }
       .a4-page {
         box-shadow: none !important;
         border-radius: 0 !important;
-        padding: 12mm 10mm !important;
+        padding: 0 !important;
         margin: 0 !important;
-        page-break-after: always !important;
-        min-height: 297mm !important;
+        min-height: auto !important;
       }
-      .no-print { display: none !important; }
+      .page-break {
+        page-break-before: always !important;
+      }
+      .no-print {
+        display: none !important;
+      }
       .cover-side-design { -webkit-print-color-adjust: exact; }
       .cover-brand-box { background-color: #f8fafc !important; -webkit-print-color-adjust: exact; }
       .cover-project-box { border-left: 10px solid #0f172a !important; -webkit-print-color-adjust: exact; }
@@ -314,11 +343,11 @@
     
     <!-- Action Toolbar -->
     <div class="d-flex justify-content-between align-items-center mb-3 no-print">
-      <span class="badge bg-success px-3 py-2"><i class="bi bi-shield-check me-1"></i> Dynamic Section Totals Engine Active</span>
+      <span class="badge bg-success px-3 py-2"><i class="bi bi-shield-check me-1"></i> Executive Print Layout Active</span>
       <div>
-        <button class="btn btn-outline-secondary btn-sm me-2" onclick="addSection()"><i class="bi bi-folder-plus me-1"></i> Add New Category</button>
-        <button class="btn btn-info btn-sm text-white fw-bold me-1" onclick="exportProjectData()"><i class="bi bi-download me-1"></i> Save Project File</button>
-        <button class="btn btn-warning btn-sm fw-bold me-2" onclick="triggerFileInput()"><i class="bi bi-upload me-1"></i> Open Existing File</button>
+        <button class="btn btn-outline-secondary btn-sm me-2" onclick="addSection()"><i class="bi bi-folder-plus me-1"></i> Add Category</button>
+        <button class="btn btn-info btn-sm text-white fw-bold me-1" onclick="exportProjectData()"><i class="bi bi-download me-1"></i> Save File</button>
+        <button class="btn btn-warning btn-sm fw-bold me-2" onclick="triggerFileInput()"><i class="bi bi-upload me-1"></i> Open File</button>
         <input type="file" id="importFileInput" style="display:none;" accept=".json" onchange="importProjectData(event)">
         <button class="btn btn-dark btn-sm fw-bold" onclick="window.print()"><i class="bi bi-printer me-1"></i> Print / Save PDF</button>
       </div>
@@ -333,7 +362,7 @@
         <br>
         <div class="cover-project-box">
           <div class="cover-project-label">PROJECT NAME</div>
-          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true">Proposed Two Storie House for Mrs Pereara @ Kurunegala</div>
+          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true" oninput="syncProjectTitle(this.innerText, 'cover')">Proposed Two Storie House for Mrs Perera @ Kurunegala</div>
         </div>
       </div>
 
@@ -341,7 +370,7 @@
         <div class="cover-brand-box">
           <div class="cover-brand-title" contenteditable="true" id="coverBrandTitle">DIGI SYS</div>
           <div class="cover-brand-sub" contenteditable="true" id="coverBrandSub">Architectural Planning • Structural & MEP Designs • 3D Visualization</div>
-          <div class="text-muted mt-1" style="font-size: 10px;" contenteditable="true" id="coverBrandContact">D 24/3, Wattegedara,Maharagama | Tel: +94 77 123 4567</div>
+          <div class="text-muted mt-1" style="font-size: 10px;" contenteditable="true" id="coverBrandContact">D 24/3, Wattegedara, Maharagama | Tel: +94 77 123 4567</div>
         </div>
         <div class="text-center text-muted small mt-3" contenteditable="true">
           Official Documentation • Issued by DIGI SYS
@@ -349,22 +378,25 @@
       </div>
     </div>
 
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
     <!-- ================= PAGE 2: SUMMARY SHEET ================= -->
-    <div class="a4-page">
+    <div class="a4-page mt-4">
       <div class="brand-header d-flex justify-content-between align-items-center">
         <div>
           <div class="editable-header-title" contenteditable="true" id="headerTitleSummary">DIGI SYS</div>
           <div class="editable-header-sub" contenteditable="true" id="headerSubSummary">Architectural Planning • Structural & MEP Designs</div>
         </div>
         <div class="editable-header-contact" contenteditable="true" id="headerContactSummary">
-          D 24/3, Wattegedara,Maharagama | Tel: +94 77 123 4567
+          D 24/3, Wattegedara, Maharagama | Tel: +94 77 123 4567
         </div>
       </div>
 
       <div class="details-grid">
         <div class="detail-card span-2">
           <div class="card-label">PROJECT TITLE</div>
-          <input type="text" class="card-input" id="summaryProjectTitle" value="Proposed Two Storie House for Mrs Perera @ Kurunegala" oninput="syncProjectTitle(this.value)">
+          <input type="text" class="card-input" id="summaryProjectTitle" value="Proposed Two Storie House for Mrs Perera @ Kurunegala" oninput="syncProjectTitle(this.value, 'summary')">
         </div>
         <div class="detail-card">
           <div class="card-label">BOQ REFERENCE NO.</div>
@@ -376,7 +408,7 @@
         </div>
         <div class="detail-card">
           <div class="card-label">SITE LOCATION</div>
-          <input type="text" class="card-input" id="summaryLocation" value="Wattegedara,Maharagama">
+          <input type="text" class="card-input" id="summaryLocation" value="Wattegedara, Maharagama">
         </div>
         <div class="detail-card">
           <div class="card-label">DATE</div>
@@ -395,7 +427,7 @@
           </tr>
         </thead>
         <tbody id="summaryTableBody">
-          <!-- Dynamically Populated by JS -->
+          <!-- Dynamically Populated -->
         </tbody>
       </table>
 
@@ -416,7 +448,7 @@
         </div>
       </div>
 
-      <div class="row mt-5 pt-5 text-center">
+      <div class="row mt-5 pt-5 text-center" style="page-break-inside: avoid;">
         <div class="col-6">
           <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Prepared By (DIGI SYS)</div>
         </div>
@@ -426,25 +458,32 @@
       </div>
     </div>
 
+    <!-- PAGE BREAK -->
+    <div class="page-break"></div>
+
     <!-- ================= PAGE 3+: DETAILED BOQ SHEET ================= -->
-    <div class="a4-page">
-      <div class="brand-header d-flex justify-content-between align-items-center">
-        <div>
-          <div class="editable-header-title" contenteditable="true" id="headerTitleDetails">DIGI SYS</div>
-          <div class="editable-header-sub" contenteditable="true" id="headerSubDetails">BOQ Detailed Breakdown Schedule</div>
-        </div>
-        <div class="editable-header-contact" contenteditable="true" id="headerContactDetails">
-          D 24/3, Wattegedara,Maharagamas
-        </div>
-      </div>
-
-      <h5 class="fw-bold text-dark mb-3">DETAILED BILL OF QUANTITIES</h5>
-
+    <div class="a4-page mt-4">
+      
       <table class="table-boq" id="boqTable">
-        <thead>
+        <!-- Repeatable Header across multi-page prints -->
+        <thead class="repeatable-header">
           <tr>
-            <th style="width: 7%;">ITEM</th>
-            <th style="width: 39%;">WORK DESCRIPTION & SPECIFICATION</th>
+            <td colspan="7" style="border: none; padding: 0 0 15px 0;">
+              <div class="brand-header d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="editable-header-title" contenteditable="true" id="headerTitleDetails">DIGI SYS</div>
+                  <div class="editable-header-sub" contenteditable="true" id="headerSubDetails">BOQ Detailed Breakdown Schedule</div>
+                </div>
+                <div class="editable-header-contact" contenteditable="true" id="headerContactDetails">
+                  D 24/3, Wattegedara, Maharagama
+                </div>
+              </div>
+              <h6 class="fw-bold text-dark mb-0 text-uppercase">DETAILED BILL OF QUANTITIES</h6>
+            </td>
+          </tr>
+          <tr>
+            <th style="width: 8%;">ITEM</th>
+            <th style="width: 38%;">WORK DESCRIPTION & SPECIFICATION</th>
             <th style="width: 8%;">UNIT</th>
             <th style="width: 11%;">QTY</th>
             <th style="width: 16%;">RATE (LKR)</th>
@@ -461,7 +500,7 @@
             </td>
             <td class="text-center no-print">
               <div class="d-flex justify-content-center align-items-center gap-1">
-                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('sec-1')"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item" onclick="addItemToSection('sec-1')"><i class="bi bi-plus-circle-fill"></i></button>
                 <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
               </div>
             </td>
@@ -497,7 +536,7 @@
             </td>
             <td class="text-center no-print">
               <div class="d-flex justify-content-center align-items-center gap-1">
-                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('sec-2')"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item" onclick="addItemToSection('sec-2')"><i class="bi bi-plus-circle-fill"></i></button>
                 <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
               </div>
             </td>
@@ -584,7 +623,7 @@
     })();
   </script>
 
-  <!-- 3. CORE BOQ SYSTEM LOGIC (FULLY FIXED FOR FULL SAVE/RESTORE & TEXTAREA EXPANSION) -->
+  <!-- 3. CORE BOQ SYSTEM LOGIC -->
   <script>
     let sectionCounter = 2;
 
@@ -594,9 +633,15 @@
       el.style.height = (el.scrollHeight || 22) + 'px';
     }
 
-    function syncProjectTitle(val) {
-      let coverEl = document.getElementById('coverProjectTitle');
-      if (coverEl) coverEl.innerText = val;
+    // PROJECT TITLE SYNC MECHANISM
+    function syncProjectTitle(val, source) {
+      if (source === 'cover') {
+        let sumInput = document.getElementById('summaryProjectTitle');
+        if (sumInput) sumInput.value = val;
+      } else if (source === 'summary') {
+        let coverBox = document.getElementById('coverProjectTitle');
+        if (coverBox) coverBox.innerText = val;
+      }
       autoSaveToLocalStorage();
     }
 
@@ -703,7 +748,7 @@
         </td>
         <td class="text-center no-print">
           <div class="d-flex justify-content-center align-items-center gap-1">
-            <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('${secId}')"><i class="bi bi-plus-circle-fill"></i></button>
+            <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item" onclick="addItemToSection('${secId}')"><i class="bi bi-plus-circle-fill"></i></button>
             <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
           </div>
         </td>
@@ -762,8 +807,6 @@
       calculateBOQ();
     }
 
-    /* ================= SAVE & REVISION MANAGER SYSTEM (FULL EXTENDED PAYLOAD) ================= */
-
     function getProjectPayload() {
       let sectionsData = [];
       document.querySelectorAll('.section-header-row').forEach(header => {
@@ -785,7 +828,6 @@
       });
 
       return {
-        // Editable Cover & Header Text Data
         coverDocTitle: document.getElementById('coverDocTitle') ? document.getElementById('coverDocTitle').innerText : '',
         coverBrandTitle: document.getElementById('coverBrandTitle') ? document.getElementById('coverBrandTitle').innerText : '',
         coverBrandSub: document.getElementById('coverBrandSub') ? document.getElementById('coverBrandSub').innerText : '',
@@ -797,7 +839,6 @@
         headerSubDetails: document.getElementById('headerSubDetails') ? document.getElementById('headerSubDetails').innerText : '',
         headerContactDetails: document.getElementById('headerContactDetails') ? document.getElementById('headerContactDetails').innerText : '',
         
-        // Project Info
         projectTitle: document.getElementById('summaryProjectTitle') ? document.getElementById('summaryProjectTitle').value : '',
         boqRef: document.getElementById('summaryRef') ? document.getElementById('summaryRef').value : '',
         clientName: document.getElementById('clientNameInput') ? document.getElementById('clientNameInput').value : '',
@@ -805,7 +846,6 @@
         date: document.getElementById('summaryDate') ? document.getElementById('summaryDate').value : '',
         contingencyPercent: document.getElementById('contingencyPercent') ? document.getElementById('contingencyPercent').value : 5,
         
-        // Detailed Sections Data
         sections: sectionsData
       };
     }
@@ -818,7 +858,6 @@
     function loadFromPayload(data) {
       if (!data) return;
 
-      // Restore Cover & Header Titles
       if (data.coverDocTitle && document.getElementById('coverDocTitle')) document.getElementById('coverDocTitle').innerText = data.coverDocTitle;
       if (data.coverBrandTitle && document.getElementById('coverBrandTitle')) document.getElementById('coverBrandTitle').innerText = data.coverBrandTitle;
       if (data.coverBrandSub && document.getElementById('coverBrandSub')) document.getElementById('coverBrandSub').innerText = data.coverBrandSub;
@@ -830,7 +869,6 @@
       if (data.headerSubDetails && document.getElementById('headerSubDetails')) document.getElementById('headerSubDetails').innerText = data.headerSubDetails;
       if (data.headerContactDetails && document.getElementById('headerContactDetails')) document.getElementById('headerContactDetails').innerText = data.headerContactDetails;
 
-      // Restore Project Details
       if (document.getElementById('summaryProjectTitle')) document.getElementById('summaryProjectTitle').value = data.projectTitle || '';
       if (document.getElementById('coverProjectTitle')) document.getElementById('coverProjectTitle').innerText = data.projectTitle || '';
       if (document.getElementById('summaryRef')) document.getElementById('summaryRef').value = data.boqRef || '';
@@ -858,7 +896,7 @@
             </td>
             <td class="text-center no-print">
               <div class="d-flex justify-content-center align-items-center gap-1">
-                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('${secId}')"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item" onclick="addItemToSection('${secId}')"><i class="bi bi-plus-circle-fill"></i></button>
                 <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
               </div>
             </td>
@@ -897,7 +935,6 @@
 
       calculateBOQ();
 
-      // Trigger auto-resize on all textareas after DOM restoration
       setTimeout(() => {
         document.querySelectorAll('textarea.desc-input').forEach(ta => autoResizeTextarea(ta));
       }, 100);
