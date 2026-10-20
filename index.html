@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASE Architecture - Executive BOQ Booklet</title>
+  <title>DIGI SYS - Executive BOQ Booklet</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -333,18 +333,18 @@
         <br>
         <div class="cover-project-box">
           <div class="cover-project-label">PROJECT NAME</div>
-          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true">Proposed Two Storie House for Mrs Alagiyawanna @ Kurunegala</div>
+          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true">Proposed Two Storie House for Mrs Pereara @ Kurunegala</div>
         </div>
       </div>
 
       <div>
         <div class="cover-brand-box">
-          <div class="cover-brand-title" contenteditable="true" id="coverBrandTitle">ASE ARCHITECTURE</div>
+          <div class="cover-brand-title" contenteditable="true" id="coverBrandTitle">DIGI SYS</div>
           <div class="cover-brand-sub" contenteditable="true" id="coverBrandSub">Architectural Planning • Structural & MEP Designs • 3D Visualization</div>
-          <div class="text-muted mt-1" style="font-size: 10px;" contenteditable="true" id="coverBrandContact">D 240/3, Tholangamuwa, Warakapola | Tel: +94 77 123 4567</div>
+          <div class="text-muted mt-1" style="font-size: 10px;" contenteditable="true" id="coverBrandContact">D 24/3, Wattegedara,Maharagama | Tel: +94 77 123 4567</div>
         </div>
         <div class="text-center text-muted small mt-3" contenteditable="true">
-          Official Documentation • Issued by ASE Architecture
+          Official Documentation • Issued by DIGI SYS
         </div>
       </div>
     </div>
@@ -353,30 +353,30 @@
     <div class="a4-page">
       <div class="brand-header d-flex justify-content-between align-items-center">
         <div>
-          <div class="editable-header-title" contenteditable="true" id="headerTitleSummary">ASE ARCHITECTURE</div>
+          <div class="editable-header-title" contenteditable="true" id="headerTitleSummary">DIGI SYS</div>
           <div class="editable-header-sub" contenteditable="true" id="headerSubSummary">Architectural Planning • Structural & MEP Designs</div>
         </div>
         <div class="editable-header-contact" contenteditable="true" id="headerContactSummary">
-          D 240/3, Tholangamuwa, Warakapola | Tel: +94 77 123 4567
+          D 24/3, Wattegedara,Maharagama | Tel: +94 77 123 4567
         </div>
       </div>
 
       <div class="details-grid">
         <div class="detail-card span-2">
           <div class="card-label">PROJECT TITLE</div>
-          <input type="text" class="card-input" id="summaryProjectTitle" value="Proposed Two Storie House for Mrs Alagiyawanna @ Kurunegala" oninput="syncProjectTitle(this.value)">
+          <input type="text" class="card-input" id="summaryProjectTitle" value="Proposed Two Storie House for Mrs Perera @ Kurunegala" oninput="syncProjectTitle(this.value)">
         </div>
         <div class="detail-card">
           <div class="card-label">BOQ REFERENCE NO.</div>
-          <input type="text" class="card-input" id="summaryRef" value="ASE/BOQ/2026/01">
+          <input type="text" class="card-input" id="summaryRef" value="DIGISYS/BOQ/2026/01">
         </div>
         <div class="detail-card">
           <div class="card-label">CLIENT NAME</div>
-          <input type="text" class="card-input" id="clientNameInput" value="Mrs. Alagiyawanna">
+          <input type="text" class="card-input" id="clientNameInput" value="Mrs. Perera">
         </div>
         <div class="detail-card">
           <div class="card-label">SITE LOCATION</div>
-          <input type="text" class="card-input" id="summaryLocation" value="Pidurangala, Kurunegala">
+          <input type="text" class="card-input" id="summaryLocation" value="Wattegedara,Maharagama">
         </div>
         <div class="detail-card">
           <div class="card-label">DATE</div>
@@ -418,7 +418,7 @@
 
       <div class="row mt-5 pt-5 text-center">
         <div class="col-6">
-          <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Prepared By (ASE Architecture)</div>
+          <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Prepared By (DIGI SYS)</div>
         </div>
         <div class="col-6">
           <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Accepted By (Client)</div>
@@ -430,11 +430,11 @@
     <div class="a4-page">
       <div class="brand-header d-flex justify-content-between align-items-center">
         <div>
-          <div class="editable-header-title" contenteditable="true" id="headerTitleDetails">ASE ARCHITECTURE</div>
+          <div class="editable-header-title" contenteditable="true" id="headerTitleDetails">DIGI SYS</div>
           <div class="editable-header-sub" contenteditable="true" id="headerSubDetails">BOQ Detailed Breakdown Schedule</div>
         </div>
         <div class="editable-header-contact" contenteditable="true" id="headerContactDetails">
-          D 240/3, Tholangamuwa, Warakapola
+          D 24/3, Wattegedara,Maharagamas
         </div>
       </div>
 
@@ -783,7 +783,7 @@
 
     function autoSaveToLocalStorage() {
       let payload = getProjectPayload();
-      localStorage.setItem('ASE_BOQ_AUTOSAVE', JSON.stringify(payload));
+      localStorage.setItem('DIGISYS_BOQ_AUTOSAVE', JSON.stringify(payload));
     }
 
     function loadFromPayload(data) {
@@ -888,7 +888,7 @@
     }
 
     window.onload = function() {
-      let autoSaved = localStorage.getItem('ASE_BOQ_AUTOSAVE');
+      let autoSaved = localStorage.getItem('DIGISYS_BOQ_AUTOSAVE');
       if (autoSaved) {
         try {
           loadFromPayload(JSON.parse(autoSaved));
