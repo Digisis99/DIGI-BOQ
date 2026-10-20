@@ -40,7 +40,7 @@
       box-sizing: border-box;
     }
 
-    /* Cover Page Styling */
+    /* Cover Page Styling Fixed for Vertical Balance */
     .cover-page {
       display: flex;
       flex-direction: column;
@@ -50,6 +50,7 @@
       position: relative;
       overflow: hidden;
       min-height: 1120px;
+      box-sizing: border-box;
     }
 
     .cover-side-design {
@@ -61,23 +62,35 @@
       background: linear-gradient(180deg, var(--brand-navy) 0%, var(--brand-blue) 70%, var(--brand-gold) 100%);
     }
 
-    .cover-main-content {
+    .cover-top-content {
       text-align: center;
-      margin-top: 120px;
-      margin-bottom: auto;
+      margin-top: 40px;
       position: relative;
       z-index: 2;
     }
 
+    .cover-middle-content {
+      text-align: center;
+      margin: auto 0;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .cover-bottom-content {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 10px;
+    }
+
     .cover-doc-title {
-      font-size: 40px;
+      font-size: 38px;
       font-weight: 900;
       color: var(--brand-navy);
       letter-spacing: 2px;
       padding-bottom: 12px;
       border-bottom: 6px solid var(--brand-gold);
       display: inline-block;
-      margin-bottom: 35px;
       text-transform: uppercase;
       outline: none;
     }
@@ -87,7 +100,7 @@
       border: 2px solid var(--brand-navy);
       border-left: 10px solid var(--brand-navy);
       border-radius: 10px;
-      padding: 24px 30px;
+      padding: 30px 35px;
       display: block;
       max-width: 92%;
       margin: 0 auto;
@@ -99,13 +112,13 @@
       color: var(--brand-gold);
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .cover-project-name {
-      font-size: 24px;
+      font-size: 25px;
       font-weight: 800;
       color: var(--brand-navy);
-      line-height: 1.35;
+      line-height: 1.4;
       outline: none;
       word-wrap: break-word;
     }
@@ -114,12 +127,10 @@
       border: 1px solid var(--border-color);
       background-color: #f8fafc;
       border-radius: 10px;
-      padding: 18px 25px;
+      padding: 20px 25px;
       text-align: center;
       max-width: 85%;
-      margin: 30px auto 10px auto;
-      position: relative;
-      z-index: 2;
+      margin: 0 auto 10px auto;
     }
     .cover-brand-title {
       font-size: 22px;
@@ -197,7 +208,7 @@
       outline: none;
     }
 
-    /* Tables & Repeatable Headers */
+    /* Tables & Column Width Adjustments */
     .table-boq {
       width: 100%;
       table-layout: fixed;
@@ -220,7 +231,6 @@
       text-align: center;
     }
 
-    /* Printable Header Repeating Mechanism */
     thead.repeatable-header {
       display: table-header-group;
     }
@@ -322,6 +332,11 @@
         margin: 0 !important;
         min-height: auto !important;
       }
+      .cover-page {
+        height: 275mm !important;
+        min-height: 275mm !important;
+        padding: 40px 30px !important;
+      }
       .page-break {
         page-break-before: always !important;
       }
@@ -357,22 +372,27 @@
     <div class="a4-page cover-page">
       <div class="cover-side-design"></div>
 
-      <div class="cover-main-content">
+      <!-- Top Section -->
+      <div class="cover-top-content">
         <div class="cover-doc-title" contenteditable="true" id="coverDocTitle">BILL OF QUANTITIES (BOQ)</div>
-        <br>
+      </div>
+
+      <!-- Middle Section -->
+      <div class="cover-middle-content">
         <div class="cover-project-box">
           <div class="cover-project-label">PROJECT NAME</div>
-          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true" oninput="syncProjectTitle(this.innerText, 'cover')">Proposed Two Storie House for Mrs Perera @ Kurunegala</div>
+          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true" onkeyup="syncProjectTitle(this.innerText, 'cover')" onblur="syncProjectTitle(this.innerText, 'cover')">Proposed Two Storie House for Mrs Perera @ Kurunegala</div>
         </div>
       </div>
 
-      <div>
+      <!-- Bottom Section -->
+      <div class="cover-bottom-content">
         <div class="cover-brand-box">
           <div class="cover-brand-title" contenteditable="true" id="coverBrandTitle">DIGI SYS</div>
           <div class="cover-brand-sub" contenteditable="true" id="coverBrandSub">Architectural Planning • Structural & MEP Designs • 3D Visualization</div>
           <div class="text-muted mt-1" style="font-size: 10px;" contenteditable="true" id="coverBrandContact">D 24/3, Wattegedara, Maharagama | Tel: +94 77 123 4567</div>
         </div>
-        <div class="text-center text-muted small mt-3" contenteditable="true">
+        <div class="text-center text-muted small mt-2" contenteditable="true">
           Official Documentation • Issued by DIGI SYS
         </div>
       </div>
@@ -482,13 +502,13 @@
             </td>
           </tr>
           <tr>
-            <th style="width: 8%;">ITEM</th>
-            <th style="width: 38%;">WORK DESCRIPTION & SPECIFICATION</th>
-            <th style="width: 8%;">UNIT</th>
-            <th style="width: 11%;">QTY</th>
-            <th style="width: 16%;">RATE (LKR)</th>
-            <th style="width: 15%;">AMOUNT (LKR)</th>
-            <th style="width: 4%;" class="no-print"></th>
+            <th style="width: 5%;">ITEM</th>
+            <th style="width: 52%;">WORK DESCRIPTION & SPECIFICATION</th>
+            <th style="width: 6%;">UNIT</th>
+            <th style="width: 9%;">QTY</th>
+            <th style="width: 12%;">RATE (LKR)</th>
+            <th style="width: 13%;">AMOUNT (LKR)</th>
+            <th style="width: 3%;" class="no-print"></th>
           </tr>
         </thead>
         <tbody id="boqBody">
@@ -633,7 +653,7 @@
       el.style.height = (el.scrollHeight || 22) + 'px';
     }
 
-    // PROJECT TITLE SYNC MECHANISM
+    // REALTIME TWO-WAY PROJECT TITLE SYNC ENGINE
     function syncProjectTitle(val, source) {
       if (source === 'cover') {
         let sumInput = document.getElementById('summaryProjectTitle');
