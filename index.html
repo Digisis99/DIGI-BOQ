@@ -584,22 +584,24 @@
     })();
   </script>
 
-  <!-- 3. CORE BOQ SYSTEM LOGIC -->
+  <!-- 3. CORE BOQ SYSTEM LOGIC (FULLY FIXED FOR FULL SAVE/RESTORE & TEXTAREA EXPANSION) -->
   <script>
     let sectionCounter = 2;
 
     function autoResizeTextarea(el) {
+      if (!el) return;
       el.style.height = 'auto';
-      el.style.height = el.scrollHeight + 'px';
+      el.style.height = (el.scrollHeight || 22) + 'px';
     }
 
     function syncProjectTitle(val) {
-      document.getElementById('coverProjectTitle').innerText = val;
+      let coverEl = document.getElementById('coverProjectTitle');
+      if (coverEl) coverEl.innerText = val;
       autoSaveToLocalStorage();
     }
 
     function cleanSectionTitle(title) {
-      return title.replace(/^[0-9]+(\.[0-9]+)?\s*/, '');
+      return title ? title.replace(/^[0-9]+(\.[0-9]+)?\s*/, '') : '';
     }
 
     function parseRawNumber(val) {
@@ -637,19 +639,23 @@
         secItems.forEach(row => {
           let qtyInput = row.querySelector('.qty');
           let rateInput = row.querySelector('.rate');
-          let qty = parseRawNumber(qtyInput.value);
-          let rate = parseRawNumber(rateInput.value);
+          let qty = parseRawNumber(qtyInput ? qtyInput.value : 0);
+          let rate = parseRawNumber(rateInput ? rateInput.value : 0);
           let amount = qty * rate;
           
-          row.querySelector('.amount').innerText = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          let amountEl = row.querySelector('.amount');
+          if (amountEl) {
+            amountEl.innerText = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          }
           sectionTotal += amount;
         });
 
-        // Update Subtotal Row with Category Name Dynamically
         let subtotalRow = document.getElementById(`subtotal-${secId}`);
         if (subtotalRow) {
-          subtotalRow.querySelector('.section-total-label').innerText = `Total Amount for ${cleanTitle} (LKR):`;
-          subtotalRow.querySelector('.section-subtotal').innerText = sectionTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          let labelEl = subtotalRow.querySelector('.section-total-label');
+          let valEl = subtotalRow.querySelector('.section-subtotal');
+          if (labelEl) labelEl.innerText = `Total Amount for ${cleanTitle} (LKR):`;
+          if (valEl) valEl.innerText = sectionTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         summaryHtml += `
@@ -664,14 +670,21 @@
         overallSubtotal += sectionTotal;
       });
 
-      let contingencyRate = parseFloat(document.getElementById('contingencyPercent').value) || 0;
+      let contInput = document.getElementById('contingencyPercent');
+      let contingencyRate = parseFloat(contInput ? contInput.value : 0) || 0;
       let contingency = overallSubtotal * (contingencyRate / 100);
       let grandTotal = overallSubtotal + contingency;
 
-      document.getElementById('summaryTableBody').innerHTML = summaryHtml;
-      document.getElementById('summarySubTotal').innerText = overallSubtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      document.getElementById('summaryContingency').innerText = contingency.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      document.getElementById('summaryGrandTotal').innerText = grandTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      let sumBody = document.getElementById('summaryTableBody');
+      if (sumBody) sumBody.innerHTML = summaryHtml;
+      
+      let subTotEl = document.getElementById('summarySubTotal');
+      let contEl = document.getElementById('summaryContingency');
+      let grandTotEl = document.getElementById('summaryGrandTotal');
+      
+      if (subTotEl) subTotEl.innerText = overallSubtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (contEl) contEl.innerText = contingency.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (grandTotEl) grandTotEl.innerText = grandTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
       autoSaveToLocalStorage();
     }
@@ -738,6 +751,7 @@
 
     function deleteRow(btn) {
       let row = btn.closest('tr');
+      if (!row) return;
       if (row.classList.contains('section-header-row')) {
         let secId = row.getAttribute('data-section');
         document.querySelectorAll(`tr[data-section-item="${secId}"]`).forEach(el => el.remove());
@@ -748,7 +762,7 @@
       calculateBOQ();
     }
 
-    /* ================= SAVE & REVISION MANAGER SYSTEM ================= */
+    /* ================= SAVE & REVISION MANAGER SYSTEM (FULL EXTENDED PAYLOAD) ================= */
 
     function getProjectPayload() {
       let sectionsData = [];
@@ -759,11 +773,11 @@
 
         document.querySelectorAll(`tr[data-section-item="${secId}"]`).forEach(row => {
           items.push({
-            itemNo: row.querySelector('.item-no').value,
-            desc: row.querySelector('.desc-input').value,
-            unit: row.querySelector('.unit-input').value,
-            qty: row.querySelector('.qty').value,
-            rate: row.querySelector('.rate').value
+            itemNo: row.querySelector('.item-no') ? row.querySelector('.item-no').value : '',
+            desc: row.querySelector('.desc-input') ? row.querySelector('.desc-input').value : '',
+            unit: row.querySelector('.unit-input') ? row.querySelector('.unit-input').value : '',
+            qty: row.querySelector('.qty') ? row.querySelector('.qty').value : '0.00',
+            rate: row.querySelector('.rate') ? row.querySelector('.rate').value : '0.00'
           });
         });
 
@@ -771,12 +785,27 @@
       });
 
       return {
-        projectTitle: document.getElementById('summaryProjectTitle').value,
-        boqRef: document.getElementById('summaryRef').value,
-        clientName: document.getElementById('clientNameInput').value,
-        location: document.getElementById('summaryLocation').value,
-        date: document.getElementById('summaryDate').value,
-        contingencyPercent: document.getElementById('contingencyPercent').value,
+        // Editable Cover & Header Text Data
+        coverDocTitle: document.getElementById('coverDocTitle') ? document.getElementById('coverDocTitle').innerText : '',
+        coverBrandTitle: document.getElementById('coverBrandTitle') ? document.getElementById('coverBrandTitle').innerText : '',
+        coverBrandSub: document.getElementById('coverBrandSub') ? document.getElementById('coverBrandSub').innerText : '',
+        coverBrandContact: document.getElementById('coverBrandContact') ? document.getElementById('coverBrandContact').innerText : '',
+        headerTitleSummary: document.getElementById('headerTitleSummary') ? document.getElementById('headerTitleSummary').innerText : '',
+        headerSubSummary: document.getElementById('headerSubSummary') ? document.getElementById('headerSubSummary').innerText : '',
+        headerContactSummary: document.getElementById('headerContactSummary') ? document.getElementById('headerContactSummary').innerText : '',
+        headerTitleDetails: document.getElementById('headerTitleDetails') ? document.getElementById('headerTitleDetails').innerText : '',
+        headerSubDetails: document.getElementById('headerSubDetails') ? document.getElementById('headerSubDetails').innerText : '',
+        headerContactDetails: document.getElementById('headerContactDetails') ? document.getElementById('headerContactDetails').innerText : '',
+        
+        // Project Info
+        projectTitle: document.getElementById('summaryProjectTitle') ? document.getElementById('summaryProjectTitle').value : '',
+        boqRef: document.getElementById('summaryRef') ? document.getElementById('summaryRef').value : '',
+        clientName: document.getElementById('clientNameInput') ? document.getElementById('clientNameInput').value : '',
+        location: document.getElementById('summaryLocation') ? document.getElementById('summaryLocation').value : '',
+        date: document.getElementById('summaryDate') ? document.getElementById('summaryDate').value : '',
+        contingencyPercent: document.getElementById('contingencyPercent') ? document.getElementById('contingencyPercent').value : 5,
+        
+        // Detailed Sections Data
         sections: sectionsData
       };
     }
@@ -788,15 +817,30 @@
 
     function loadFromPayload(data) {
       if (!data) return;
-      document.getElementById('summaryProjectTitle').value = data.projectTitle || '';
-      document.getElementById('coverProjectTitle').innerText = data.projectTitle || '';
-      document.getElementById('summaryRef').value = data.boqRef || '';
-      document.getElementById('clientNameInput').value = data.clientName || '';
-      document.getElementById('summaryLocation').value = data.location || '';
-      document.getElementById('summaryDate').value = data.date || '';
-      document.getElementById('contingencyPercent').value = data.contingencyPercent || 5;
+
+      // Restore Cover & Header Titles
+      if (data.coverDocTitle && document.getElementById('coverDocTitle')) document.getElementById('coverDocTitle').innerText = data.coverDocTitle;
+      if (data.coverBrandTitle && document.getElementById('coverBrandTitle')) document.getElementById('coverBrandTitle').innerText = data.coverBrandTitle;
+      if (data.coverBrandSub && document.getElementById('coverBrandSub')) document.getElementById('coverBrandSub').innerText = data.coverBrandSub;
+      if (data.coverBrandContact && document.getElementById('coverBrandContact')) document.getElementById('coverBrandContact').innerText = data.coverBrandContact;
+      if (data.headerTitleSummary && document.getElementById('headerTitleSummary')) document.getElementById('headerTitleSummary').innerText = data.headerTitleSummary;
+      if (data.headerSubSummary && document.getElementById('headerSubSummary')) document.getElementById('headerSubSummary').innerText = data.headerSubSummary;
+      if (data.headerContactSummary && document.getElementById('headerContactSummary')) document.getElementById('headerContactSummary').innerText = data.headerContactSummary;
+      if (data.headerTitleDetails && document.getElementById('headerTitleDetails')) document.getElementById('headerTitleDetails').innerText = data.headerTitleDetails;
+      if (data.headerSubDetails && document.getElementById('headerSubDetails')) document.getElementById('headerSubDetails').innerText = data.headerSubDetails;
+      if (data.headerContactDetails && document.getElementById('headerContactDetails')) document.getElementById('headerContactDetails').innerText = data.headerContactDetails;
+
+      // Restore Project Details
+      if (document.getElementById('summaryProjectTitle')) document.getElementById('summaryProjectTitle').value = data.projectTitle || '';
+      if (document.getElementById('coverProjectTitle')) document.getElementById('coverProjectTitle').innerText = data.projectTitle || '';
+      if (document.getElementById('summaryRef')) document.getElementById('summaryRef').value = data.boqRef || '';
+      if (document.getElementById('clientNameInput')) document.getElementById('clientNameInput').value = data.clientName || '';
+      if (document.getElementById('summaryLocation')) document.getElementById('summaryLocation').value = data.location || '';
+      if (document.getElementById('summaryDate')) document.getElementById('summaryDate').value = data.date || '';
+      if (document.getElementById('contingencyPercent')) document.getElementById('contingencyPercent').value = data.contingencyPercent !== undefined ? data.contingencyPercent : 5;
 
       let tbody = document.getElementById('boqBody');
+      if (!tbody) return;
       tbody.innerHTML = '';
       sectionCounter = 0;
 
@@ -852,6 +896,11 @@
       }
 
       calculateBOQ();
+
+      // Trigger auto-resize on all textareas after DOM restoration
+      setTimeout(() => {
+        document.querySelectorAll('textarea.desc-input').forEach(ta => autoResizeTextarea(ta));
+      }, 100);
     }
 
     function exportProjectData() {
@@ -867,7 +916,8 @@
     }
 
     function triggerFileInput() {
-      document.getElementById('importFileInput').click();
+      let fileInput = document.getElementById('importFileInput');
+      if (fileInput) fileInput.click();
     }
 
     function importProjectData(event) {
