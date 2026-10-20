@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASE Architecture - Executive BOQ Booklet</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-navy: #0f172a;
+      --brand-blue: #1e3a8a;
+      --brand-gold: #d97706;
+      --border-color: #cbd5e1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-size: 13.5px;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .booklet-container {
+      max-width: 920px;
+      margin: 20px auto;
+    }
+
+    .a4-page {
+      background: #ffffff;
+      padding: 40px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      min-height: 1100px;
+      position: relative;
+    }
+
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid var(--border-color);
+      padding: 60px 40px 50px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-side-design {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 16px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--brand-navy) 0%, var(--brand-blue) 70%, var(--brand-gold) 100%);
+    }
+
+    .cover-main-content {
+      text-align: center;
+      margin-top: 140px;
+      margin-bottom: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cover-doc-title {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--brand-navy);
+      letter-spacing: 2px;
+      padding-bottom: 12px;
+      border-bottom: 6px solid var(--brand-gold);
+      display: inline-block;
+      margin-bottom: 35px;
+      text-transform: uppercase;
+      outline: none;
+    }
+
+    .cover-project-box {
+      background: #ffffff;
+      border: 2px solid var(--brand-navy);
+      border-left: 10px solid var(--brand-navy);
+      border-radius: 10px;
+      padding: 26px 32px;
+      display: block;
+      max-width: 92%;
+      margin: 0 auto;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+    .cover-project-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--brand-gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .cover-project-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--brand-navy);
+      line-height: 1.35;
+      outline: none;
+      word-wrap: break-word;
+    }
+
+    .cover-brand-box {
+      border: 1px solid var(--border-color);
+      background-color: #f8fafc;
+      border-radius: 10px;
+      padding: 18px 25px;
+      text-align: center;
+      max-width: 85%;
+      margin: 30px auto 10px auto;
+      position: relative;
+      z-index: 2;
+    }
+    .cover-brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: 1px;
+      outline: none;
+    }
+    .cover-brand-sub {
+      font-size: 11px;
+      color: #475569;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 3px;
+      outline: none;
+    }
+
+    .brand-header {
+      border-bottom: 3px solid var(--brand-navy);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .editable-header-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand-navy);
+      letter-spacing: 1px;
+      outline: none;
+    }
+    .editable-header-sub {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
+      outline: none;
+    }
+    .editable-header-contact {
+      font-size: 10.5px;
+      color: #334155;
+      text-align: right;
+      outline: none;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    .detail-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--brand-navy);
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+    .detail-card.span-2 { grid-column: span 2; }
+    .card-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .card-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+      outline: none;
+    }
+
+    .table-boq {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .table-boq th, .table-boq td {
+      border: 1px solid var(--border-color);
+      padding: 8px 5px;
+      vertical-align: middle;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal !important;
+    }
+    .table-boq th {
+      background-color: #f1f5f9 !important;
+      color: var(--brand-navy);
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .section-header-row td {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .section-header-row input { color: #ffffff !important; font-weight: 700; }
+    .section-total-row td {
+      background-color: #f8fafc !important;
+      font-weight: 700;
+      border-top: 2px solid #cbd5e1;
+      font-size: 12.5px;
+    }
+
+    .table-boq textarea, .table-boq input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #0f172a;
+      outline: none;
+      resize: none;
+      overflow: hidden;
+      display: block;
+      padding: 2px;
+    }
+    
+    .table-boq textarea.desc-input {
+      line-height: 1.35;
+      min-height: 22px;
+      font-weight: 500;
+    }
+
+    .summary-box {
+      width: 400px;
+      margin-left: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+    }
+    .summary-row.grand-total {
+      background-color: var(--brand-navy);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 15px;
+      border-bottom: none;
+    }
+
+    .contingency-percent-input {
+      width: 48px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 700;
+      padding: 2px 0;
+      margin-left: 5px;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    @media print {
+      body { background-color: #ffffff !important; font-size: 11.5px !important; }
+      .booklet-container { max-width: 100% !important; margin: 0 !important; }
+      .a4-page {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 12mm 10mm !important;
+        margin: 0 !important;
+        page-break-after: always !important;
+        min-height: 297mm !important;
+      }
+      .no-print { display: none !important; }
+      .cover-side-design { -webkit-print-color-adjust: exact; }
+      .cover-brand-box { background-color: #f8fafc !important; -webkit-print-color-adjust: exact; }
+      .cover-project-box { border-left: 10px solid #0f172a !important; -webkit-print-color-adjust: exact; }
+      .detail-card { border-left: 4px solid #0f172a !important; -webkit-print-color-adjust: exact; }
+      .section-header-row td { background-color: #1e293b !important; color: #ffffff !important; -webkit-print-color-adjust: exact; }
+      .summary-row.grand-total { background-color: #0f172a !important; color: #ffffff !important; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="booklet-container">
+    
+    <!-- Action Toolbar -->
+    <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+      <span class="badge bg-success px-3 py-2"><i class="bi bi-shield-check me-1"></i> Dynamic Section Totals Engine Active</span>
+      <div>
+        <button class="btn btn-outline-secondary btn-sm me-2" onclick="addSection()"><i class="bi bi-folder-plus me-1"></i> Add New Category</button>
+        <button class="btn btn-info btn-sm text-white fw-bold me-1" onclick="exportProjectData()"><i class="bi bi-download me-1"></i> Save Project File</button>
+        <button class="btn btn-warning btn-sm fw-bold me-2" onclick="triggerFileInput()"><i class="bi bi-upload me-1"></i> Open Existing File</button>
+        <input type="file" id="importFileInput" style="display:none;" accept=".json" onchange="importProjectData(event)">
+        <button class="btn btn-dark btn-sm fw-bold" onclick="window.print()"><i class="bi bi-printer me-1"></i> Print / Save PDF</button>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 1: COVER PAGE ================= -->
+    <div class="a4-page cover-page">
+      <div class="cover-side-design"></div>
+
+      <div class="cover-main-content">
+        <div class="cover-doc-title" contenteditable="true" id="coverDocTitle">BILL OF QUANTITIES (BOQ)</div>
+        <br>
+        <div class="cover-project-box">
+          <div class="cover-project-label">PROJECT NAME</div>
+          <div class="cover-project-name" id="coverProjectTitle" contenteditable="true">Proposed Two Storie House for Mrs Alagiyawanna @ Kurunegala</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="cover-brand-box">
+          <div class="cover-brand-title" contenteditable="true" id="coverBrandTitle">ASE ARCHITECTURE</div>
+          <div class="cover-brand-sub" contenteditable="true" id="coverBrandSub">Architectural Planning • Structural & MEP Designs • 3D Visualization</div>
+          <div class="text-muted mt-1" style="font-size: 10px;" contenteditable="true" id="coverBrandContact">D 240/3, Tholangamuwa, Warakapola | Tel: +94 77 123 4567</div>
+        </div>
+        <div class="text-center text-muted small mt-3" contenteditable="true">
+          Official Documentation • Issued by ASE Architecture
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 2: SUMMARY SHEET ================= -->
+    <div class="a4-page">
+      <div class="brand-header d-flex justify-content-between align-items-center">
+        <div>
+          <div class="editable-header-title" contenteditable="true" id="headerTitleSummary">ASE ARCHITECTURE</div>
+          <div class="editable-header-sub" contenteditable="true" id="headerSubSummary">Architectural Planning • Structural & MEP Designs</div>
+        </div>
+        <div class="editable-header-contact" contenteditable="true" id="headerContactSummary">
+          D 240/3, Tholangamuwa, Warakapola | Tel: +94 77 123 4567
+        </div>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-card span-2">
+          <div class="card-label">PROJECT TITLE</div>
+          <input type="text" class="card-input" id="summaryProjectTitle" value="Proposed Two Storie House for Mrs Alagiyawanna @ Kurunegala" oninput="syncProjectTitle(this.value)">
+        </div>
+        <div class="detail-card">
+          <div class="card-label">BOQ REFERENCE NO.</div>
+          <input type="text" class="card-input" id="summaryRef" value="ASE/BOQ/2026/01">
+        </div>
+        <div class="detail-card">
+          <div class="card-label">CLIENT NAME</div>
+          <input type="text" class="card-input" id="clientNameInput" value="Mrs. Alagiyawanna">
+        </div>
+        <div class="detail-card">
+          <div class="card-label">SITE LOCATION</div>
+          <input type="text" class="card-input" id="summaryLocation" value="Pidurangala, Kurunegala">
+        </div>
+        <div class="detail-card">
+          <div class="card-label">DATE</div>
+          <input type="text" class="card-input" id="summaryDate" value="10/15/2026">
+        </div>
+      </div>
+
+      <h5 class="fw-bold text-dark text-center my-4" style="letter-spacing: 1px;">BOQ SUMMARY SHEET</h5>
+
+      <table class="table-boq mb-4" id="summaryTable">
+        <thead>
+          <tr>
+            <th style="width: 18%;">BILL NO</th>
+            <th style="width: 50%;">WORK DESCRIPTION / CATEGORY</th>
+            <th style="width: 32%;" class="text-end">TOTAL AMOUNT (LKR)</th>
+          </tr>
+        </thead>
+        <tbody id="summaryTableBody">
+          <!-- Dynamically Populated by JS -->
+        </tbody>
+      </table>
+
+      <div class="summary-box mt-4">
+        <div class="summary-row">
+          <span>SUB TOTAL:</span>
+          <span class="fw-bold" id="summarySubTotal">0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>
+            CONTINGENCIES (<input type="number" id="contingencyPercent" class="contingency-percent-input" value="5" oninput="calculateBOQ()">%):
+          </span>
+          <span id="summaryContingency">0.00</span>
+        </div>
+        <div class="summary-row grand-total">
+          <span>GRAND TOTAL (LKR):</span>
+          <span id="summaryGrandTotal">0.00</span>
+        </div>
+      </div>
+
+      <div class="row mt-5 pt-5 text-center">
+        <div class="col-6">
+          <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Prepared By (ASE Architecture)</div>
+        </div>
+        <div class="col-6">
+          <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Accepted By (Client)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PAGE 3+: DETAILED BOQ SHEET ================= -->
+    <div class="a4-page">
+      <div class="brand-header d-flex justify-content-between align-items-center">
+        <div>
+          <div class="editable-header-title" contenteditable="true" id="headerTitleDetails">ASE ARCHITECTURE</div>
+          <div class="editable-header-sub" contenteditable="true" id="headerSubDetails">BOQ Detailed Breakdown Schedule</div>
+        </div>
+        <div class="editable-header-contact" contenteditable="true" id="headerContactDetails">
+          D 240/3, Tholangamuwa, Warakapola
+        </div>
+      </div>
+
+      <h5 class="fw-bold text-dark mb-3">DETAILED BILL OF QUANTITIES</h5>
+
+      <table class="table-boq" id="boqTable">
+        <thead>
+          <tr>
+            <th style="width: 7%;">ITEM</th>
+            <th style="width: 39%;">WORK DESCRIPTION & SPECIFICATION</th>
+            <th style="width: 8%;">UNIT</th>
+            <th style="width: 11%;">QTY</th>
+            <th style="width: 16%;">RATE (LKR)</th>
+            <th style="width: 15%;">AMOUNT (LKR)</th>
+            <th style="width: 4%;" class="no-print"></th>
+          </tr>
+        </thead>
+        <tbody id="boqBody">
+          
+          <!-- SECTION 1 -->
+          <tr class="section-header-row" data-section="sec-1">
+            <td colspan="6">
+              <input type="text" class="fw-bold" value="1.0 EXCAVATION AND EARTH WORK" oninput="calculateBOQ()">
+            </td>
+            <td class="text-center no-print">
+              <div class="d-flex justify-content-center align-items-center gap-1">
+                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('sec-1')"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr data-section-item="sec-1">
+            <td class="text-center"><input type="text" class="text-center item-no" value="1.1"></td>
+            <td><textarea class="desc-input" oninput="autoResizeTextarea(this)">Removing of existing Sq.ft area / Site clearing and leveling as instructed.</textarea></td>
+            <td class="text-center"><input type="text" class="text-center unit-input" value="Sq.ft"></td>
+            <td><input type="text" class="text-center qty" value="1,450.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td><input type="text" class="text-end rate" value="35.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td class="fw-bold text-end amount">0.00</td>
+            <td class="text-center no-print"><button class="btn btn-link text-danger p-0" onclick="deleteRow(this)"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr data-section-item="sec-1">
+            <td class="text-center"><input type="text" class="text-center item-no" value="1.2"></td>
+            <td><textarea class="desc-input" oninput="autoResizeTextarea(this)">Excavating for column footings and trench foundations including dewatering and shoring if necessary.</textarea></td>
+            <td class="text-center"><input type="text" class="text-center unit-input" value="m3"></td>
+            <td><input type="text" class="text-center qty" value="25.50" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td><input type="text" class="text-end rate" value="1,850.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td class="fw-bold text-end amount">0.00</td>
+            <td class="text-center no-print"><button class="btn btn-link text-danger p-0" onclick="deleteRow(this)"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr class="section-total-row" id="subtotal-sec-1">
+            <td colspan="5" class="text-end pe-3 fw-bold section-total-label">Total Amount for EXCAVATION AND EARTH WORK (LKR):</td>
+            <td class="text-end fw-bold section-subtotal">0.00</td>
+            <td class="no-print"></td>
+          </tr>
+
+          <!-- SECTION 2 -->
+          <tr class="section-header-row" data-section="sec-2">
+            <td colspan="6">
+              <input type="text" class="fw-bold" value="2.0 CONCRETING WORK" oninput="calculateBOQ()">
+            </td>
+            <td class="text-center no-print">
+              <div class="d-flex justify-content-center align-items-center gap-1">
+                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('sec-2')"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr data-section-item="sec-2">
+            <td class="text-center"><input type="text" class="text-center item-no" value="2.1"></td>
+            <td><textarea class="desc-input" oninput="autoResizeTextarea(this)">1:3:6 screed concrete 50mm thick under footings and ground beams.</textarea></td>
+            <td class="text-center"><input type="text" class="text-center unit-input" value="Sq.ft"></td>
+            <td><input type="text" class="text-center qty" value="250.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td><input type="text" class="text-end rate" value="1,200.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td class="fw-bold text-end amount">0.00</td>
+            <td class="text-center no-print"><button class="btn btn-link text-danger p-0" onclick="deleteRow(this)"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr data-section-item="sec-2">
+            <td class="text-center"><input type="text" class="text-center item-no" value="2.2"></td>
+            <td><textarea class="desc-input" oninput="autoResizeTextarea(this)">1:2:4 G25 reinforced concrete work for columns, beams, slabs including formwork and steel reinforcement.</textarea></td>
+            <td class="text-center"><input type="text" class="text-center unit-input" value="m3"></td>
+            <td><input type="text" class="text-center qty" value="25.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td><input type="text" class="text-end rate" value="39,000.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+            <td class="fw-bold text-end amount">0.00</td>
+            <td class="text-center no-print"><button class="btn btn-link text-danger p-0" onclick="deleteRow(this)"><i class="bi bi-trash"></i></button></td>
+          </tr>
+          <tr class="section-total-row" id="subtotal-sec-2">
+            <td colspan="5" class="text-end pe-3 fw-bold section-total-label">Total Amount for CONCRETING WORK (LKR):</td>
+            <td class="text-end fw-bold section-subtotal">0.00</td>
+            <td class="no-print"></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- 1. ANTI-COPY & ANTI-INSPECT SECURITY SCRIPT -->
+  <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function(e) {
+      if (e.keyCode === 123) return false; // F12
+      if (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0)) return false; // Ctrl+U
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 'C'.charCodeAt(0)) return false; // Ctrl+Shift+C
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+      if (e.ctrlKey && e.keyCode === 'S'.charCodeAt(0)) return false; // Ctrl+S
+    };
+  </script>
+
+  <!-- 2. DEVICE-LOCK LICENSE ENGINE -->
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const clientKey = urlParams.get('key');
+    const customEndpoint = urlParams.get('endpoint');
+
+    const DEFAULT_ENDPOINT = "https://script.google.com/macros/s/AKfycbzvEOijNAgkKmucXoNPWT6D0uESaVGl1zM70Wm03ql_ySepn1s9jwoud3_Go77HBQCW/exec";
+    const GOOGLE_SCRIPT_URL = customEndpoint ? decodeURIComponent(customEndpoint) : DEFAULT_ENDPOINT;
+
+    let isLicenseVerified = false;
+
+    (function() {
+      if (!clientKey) {
+        showBlocked("⛔ Access Denied!", "Valid License Key Required in URL");
+        return;
+      }
+
+      const deviceFP = window.btoa(navigator.userAgent.replace(/\s+/g, '') + screen.width + "x" + screen.height);
+
+      fetch(`${GOOGLE_SCRIPT_URL}?key=${encodeURIComponent(clientKey)}&device=${encodeURIComponent(deviceFP)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "SUCCESS") { isLicenseVerified = true; } 
+          else { showBlocked("⛔ Access Denied!", data.message); }
+        })
+        .catch(err => { showBlocked("⛔ Verification Error", "Unable to connect to verification server."); });
+
+      function showBlocked(title, msg) {
+        document.body.innerHTML = `
+          <div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#020617; color:#ef4444; font-family:sans-serif; text-align:center; padding:20px;">
+            <div style="background:#0f172a; padding:30px; border-radius:16px; border:1px solid #ef4444; max-width:420px;">
+              <h1 style="font-size:1.5rem; margin-bottom:12px; color:#ef4444;">${title}</h1>
+              <p style="color:#94a3b8; font-size:0.9rem;">${msg}</p>
+            </div>
+          </div>`;
+      }
+    })();
+  </script>
+
+  <!-- 3. CORE BOQ SYSTEM LOGIC -->
+  <script>
+    let sectionCounter = 2;
+
+    function autoResizeTextarea(el) {
+      el.style.height = 'auto';
+      el.style.height = el.scrollHeight + 'px';
+    }
+
+    function syncProjectTitle(val) {
+      document.getElementById('coverProjectTitle').innerText = val;
+      autoSaveToLocalStorage();
+    }
+
+    function cleanSectionTitle(title) {
+      return title.replace(/^[0-9]+(\.[0-9]+)?\s*/, '');
+    }
+
+    function parseRawNumber(val) {
+      if (!val) return 0;
+      let cleanStr = val.toString().replace(/,/g, '');
+      return parseFloat(cleanStr) || 0;
+    }
+
+    function unformatNumber(input) {
+      let val = parseRawNumber(input.value);
+      if (val === 0 && input.value.trim() === '') return;
+      input.value = val;
+    }
+
+    function formatInput(input) {
+      let val = parseRawNumber(input.value);
+      input.value = val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      calculateBOQ();
+    }
+
+    function calculateBOQ() {
+      let overallSubtotal = 0;
+      let summaryHtml = '';
+      let billIndex = 1;
+
+      document.querySelectorAll('textarea.desc-input').forEach(ta => autoResizeTextarea(ta));
+
+      document.querySelectorAll('.section-header-row').forEach(header => {
+        let secId = header.getAttribute('data-section');
+        let rawSecTitle = header.querySelector('input').value;
+        let cleanTitle = cleanSectionTitle(rawSecTitle);
+        let secItems = document.querySelectorAll(`tr[data-section-item="${secId}"]`);
+        let sectionTotal = 0;
+
+        secItems.forEach(row => {
+          let qtyInput = row.querySelector('.qty');
+          let rateInput = row.querySelector('.rate');
+          let qty = parseRawNumber(qtyInput.value);
+          let rate = parseRawNumber(rateInput.value);
+          let amount = qty * rate;
+          
+          row.querySelector('.amount').innerText = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          sectionTotal += amount;
+        });
+
+        // Update Subtotal Row with Category Name Dynamically
+        let subtotalRow = document.getElementById(`subtotal-${secId}`);
+        if (subtotalRow) {
+          subtotalRow.querySelector('.section-total-label').innerText = `Total Amount for ${cleanTitle} (LKR):`;
+          subtotalRow.querySelector('.section-subtotal').innerText = sectionTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        summaryHtml += `
+          <tr>
+            <td class="text-center fw-bold">BILL ${billIndex < 10 ? '0' + billIndex : billIndex}</td>
+            <td><strong class="text-dark">${cleanTitle}</strong></td>
+            <td class="text-end fw-bold">${sectionTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          </tr>
+        `;
+
+        billIndex++;
+        overallSubtotal += sectionTotal;
+      });
+
+      let contingencyRate = parseFloat(document.getElementById('contingencyPercent').value) || 0;
+      let contingency = overallSubtotal * (contingencyRate / 100);
+      let grandTotal = overallSubtotal + contingency;
+
+      document.getElementById('summaryTableBody').innerHTML = summaryHtml;
+      document.getElementById('summarySubTotal').innerText = overallSubtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('summaryContingency').innerText = contingency.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('summaryGrandTotal').innerText = grandTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      autoSaveToLocalStorage();
+    }
+
+    function addSection() {
+      sectionCounter++;
+      let secId = `sec-${sectionCounter}`;
+      let tbody = document.getElementById('boqBody');
+
+      let headerTr = document.createElement('tr');
+      headerTr.className = 'section-header-row';
+      headerTr.setAttribute('data-section', secId);
+      headerTr.innerHTML = `
+        <td colspan="6">
+          <input type="text" class="fw-bold" value="${sectionCounter}.0 NEW WORK SECTION" oninput="calculateBOQ()">
+        </td>
+        <td class="text-center no-print">
+          <div class="d-flex justify-content-center align-items-center gap-1">
+            <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('${secId}')"><i class="bi bi-plus-circle-fill"></i></button>
+            <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
+          </div>
+        </td>
+      `;
+
+      let subtotalTr = document.createElement('tr');
+      subtotalTr.className = 'section-total-row';
+      subtotalTr.id = `subtotal-${secId}`;
+      subtotalTr.innerHTML = `
+        <td colspan="5" class="text-end pe-3 fw-bold section-total-label">Total Amount for NEW WORK SECTION (LKR):</td>
+        <td class="text-end fw-bold section-subtotal">0.00</td>
+        <td class="no-print"></td>
+      `;
+
+      tbody.appendChild(headerTr);
+      tbody.appendChild(subtotalTr);
+      
+      addItemToSection(secId);
+    }
+
+    function addItemToSection(secId) {
+      let subtotalRow = document.getElementById(`subtotal-${secId}`);
+      if (!subtotalRow) return;
+
+      let secHeader = document.querySelector(`tr[data-section="${secId}"]`);
+      let secNumMatch = secHeader ? secHeader.querySelector('input').value.match(/^([0-9]+)/) : null;
+      let secNum = secNumMatch ? secNumMatch[1] : '1';
+      let existingItemsCount = document.querySelectorAll(`tr[data-section-item="${secId}"]`).length + 1;
+      let defaultItemNo = `${secNum}.${existingItemsCount}`;
+
+      let row = document.createElement('tr');
+      row.setAttribute('data-section-item', secId);
+      row.innerHTML = `
+        <td class="text-center"><input type="text" class="text-center item-no" value="${defaultItemNo}"></td>
+        <td><textarea class="desc-input" placeholder="Enter work description..." oninput="autoResizeTextarea(this)"></textarea></td>
+        <td class="text-center"><input type="text" class="text-center unit-input" placeholder="Unit"></td>
+        <td><input type="text" class="text-center qty" value="0.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+        <td><input type="text" class="text-end rate" value="0.00" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+        <td class="fw-bold text-end amount">0.00</td>
+        <td class="text-center no-print"><button class="btn btn-link text-danger p-0" title="Delete item" onclick="deleteRow(this)"><i class="bi bi-trash"></i></button></td>
+      `;
+      subtotalRow.parentNode.insertBefore(row, subtotalRow);
+      calculateBOQ();
+    }
+
+    function deleteRow(btn) {
+      let row = btn.closest('tr');
+      if (row.classList.contains('section-header-row')) {
+        let secId = row.getAttribute('data-section');
+        document.querySelectorAll(`tr[data-section-item="${secId}"]`).forEach(el => el.remove());
+        let subRow = document.getElementById(`subtotal-${secId}`);
+        if(subRow) subRow.remove();
+      }
+      row.remove();
+      calculateBOQ();
+    }
+
+    /* ================= SAVE & REVISION MANAGER SYSTEM ================= */
+
+    function getProjectPayload() {
+      let sectionsData = [];
+      document.querySelectorAll('.section-header-row').forEach(header => {
+        let secId = header.getAttribute('data-section');
+        let secTitle = header.querySelector('input').value;
+        let items = [];
+
+        document.querySelectorAll(`tr[data-section-item="${secId}"]`).forEach(row => {
+          items.push({
+            itemNo: row.querySelector('.item-no').value,
+            desc: row.querySelector('.desc-input').value,
+            unit: row.querySelector('.unit-input').value,
+            qty: row.querySelector('.qty').value,
+            rate: row.querySelector('.rate').value
+          });
+        });
+
+        sectionsData.push({ secId, secTitle, items });
+      });
+
+      return {
+        projectTitle: document.getElementById('summaryProjectTitle').value,
+        boqRef: document.getElementById('summaryRef').value,
+        clientName: document.getElementById('clientNameInput').value,
+        location: document.getElementById('summaryLocation').value,
+        date: document.getElementById('summaryDate').value,
+        contingencyPercent: document.getElementById('contingencyPercent').value,
+        sections: sectionsData
+      };
+    }
+
+    function autoSaveToLocalStorage() {
+      let payload = getProjectPayload();
+      localStorage.setItem('ASE_BOQ_AUTOSAVE', JSON.stringify(payload));
+    }
+
+    function loadFromPayload(data) {
+      if (!data) return;
+      document.getElementById('summaryProjectTitle').value = data.projectTitle || '';
+      document.getElementById('coverProjectTitle').innerText = data.projectTitle || '';
+      document.getElementById('summaryRef').value = data.boqRef || '';
+      document.getElementById('clientNameInput').value = data.clientName || '';
+      document.getElementById('summaryLocation').value = data.location || '';
+      document.getElementById('summaryDate').value = data.date || '';
+      document.getElementById('contingencyPercent').value = data.contingencyPercent || 5;
+
+      let tbody = document.getElementById('boqBody');
+      tbody.innerHTML = '';
+      sectionCounter = 0;
+
+      if (data.sections && data.sections.length > 0) {
+        data.sections.forEach(sec => {
+          sectionCounter++;
+          let secId = sec.secId || `sec-${sectionCounter}`;
+
+          let headerTr = document.createElement('tr');
+          headerTr.className = 'section-header-row';
+          headerTr.setAttribute('data-section', secId);
+          headerTr.innerHTML = `
+            <td colspan="6">
+              <input type="text" class="fw-bold" value="${sec.secTitle}" oninput="calculateBOQ()">
+            </td>
+            <td class="text-center no-print">
+              <div class="d-flex justify-content-center align-items-center gap-1">
+                <button class="btn btn-sm btn-outline-light p-0 px-1" title="Add item to this section" onclick="addItemToSection('${secId}')"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-link text-white p-0" title="Delete section" onclick="deleteRow(this)"><i class="bi bi-x-circle-fill"></i></button>
+              </div>
+            </td>
+          `;
+
+          tbody.appendChild(headerTr);
+
+          if (sec.items) {
+            sec.items.forEach(item => {
+              let row = document.createElement('tr');
+              row.setAttribute('data-section-item', secId);
+              row.innerHTML = `
+                <td class="text-center"><input type="text" class="text-center item-no" value="${item.itemNo}"></td>
+                <td><textarea class="desc-input" oninput="autoResizeTextarea(this)">${item.desc}</textarea></td>
+                <td class="text-center"><input type="text" class="text-center unit-input" value="${item.unit}"></td>
+                <td><input type="text" class="text-center qty" value="${item.qty}" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+                <td><input type="text" class="text-end rate" value="${item.rate}" onfocus="unformatNumber(this)" onblur="formatInput(this)" oninput="calculateBOQ()"></td>
+                <td class="fw-bold text-end amount">0.00</td>
+                <td class="text-center no-print"><button class="btn btn-link text-danger p-0" title="Delete item" onclick="deleteRow(this)"><i class="bi bi-trash"></i></button></td>
+              `;
+              tbody.appendChild(row);
+            });
+          }
+
+          let subtotalTr = document.createElement('tr');
+          subtotalTr.className = 'section-total-row';
+          subtotalTr.id = `subtotal-${secId}`;
+          subtotalTr.innerHTML = `
+            <td colspan="5" class="text-end pe-3 fw-bold section-total-label">Total Amount for ${cleanSectionTitle(sec.secTitle)} (LKR):</td>
+            <td class="text-end fw-bold section-subtotal">0.00</td>
+            <td class="no-print"></td>
+          `;
+          tbody.appendChild(subtotalTr);
+        });
+      }
+
+      calculateBOQ();
+    }
+
+    function exportProjectData() {
+      let payload = getProjectPayload();
+      let filename = (payload.clientName || 'Project').replace(/[^a-z0-9]/gi, '_') + '_BOQ_Backup.json';
+      let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+      let dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", filename);
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+    }
+
+    function triggerFileInput() {
+      document.getElementById('importFileInput').click();
+    }
+
+    function importProjectData(event) {
+      let file = event.target.files[0];
+      if (!file) return;
+
+      let reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          let parsedData = JSON.parse(e.target.result);
+          loadFromPayload(parsedData);
+          alert('Project Revision Loaded Successfully!');
+        } catch (err) {
+          alert('Invalid Project File Format!');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.onload = function() {
+      let autoSaved = localStorage.getItem('ASE_BOQ_AUTOSAVE');
+      if (autoSaved) {
+        try {
+          loadFromPayload(JSON.parse(autoSaved));
+        } catch(e) {
+          calculateBOQ();
+        }
+      } else {
+        calculateBOQ();
+      }
+    };
+  </script>
+</body>
+</html>
