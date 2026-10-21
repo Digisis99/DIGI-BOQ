@@ -309,6 +309,16 @@
       margin-left: 5px;
     }
 
+    /* Editable Signatures Styling */
+    .sign-box {
+      outline: none;
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    .sign-box:hover, .sign-box:focus {
+      background-color: #f1f5f9;
+    }
+
     /* Print Specific Strict Styles */
     @page {
       size: A4 portrait;
@@ -350,6 +360,7 @@
       .detail-card { border-left: 4px solid #0f172a !important; -webkit-print-color-adjust: exact; }
       .section-header-row td { background-color: #1e293b !important; color: #ffffff !important; -webkit-print-color-adjust: exact; }
       .summary-row.grand-total { background-color: #0f172a !important; color: #ffffff !important; -webkit-print-color-adjust: exact; }
+      .sign-box:hover, .sign-box:focus { background-color: transparent !important; }
     }
   </style>
 </head>
@@ -474,12 +485,19 @@
         </div>
       </div>
 
+      <!-- Fully Editable Signatures Area -->
       <div class="row mt-5 pt-5 text-center" style="page-break-inside: avoid;">
         <div class="col-6">
-          <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Prepared By (DIGI SYS)</div>
+          <div class="border-top border-dark w-75 mx-auto pt-2">
+            <span class="fw-bold sign-box" contenteditable="true" id="signPrepLabel">Prepared By</span>
+            <span class="sign-box" contenteditable="true" id="signPrepValue">(DIGI SYS)</span>
+          </div>
         </div>
         <div class="col-6">
-          <div class="border-top border-dark w-75 mx-auto pt-2 fw-bold">Accepted By (Client)</div>
+          <div class="border-top border-dark w-75 mx-auto pt-2">
+            <span class="fw-bold sign-box" contenteditable="true" id="signAccLabel">Accepted By</span>
+            <span class="sign-box" contenteditable="true" id="signAccValue">(Client)</span>
+          </div>
         </div>
       </div>
     </div>
@@ -883,6 +901,12 @@
         date: document.getElementById('summaryDate') ? document.getElementById('summaryDate').value : '',
         contingencyPercent: document.getElementById('contingencyPercent') ? document.getElementById('contingencyPercent').value : 5,
         
+        // Editable Signature Values Data
+        signPrepLabel: document.getElementById('signPrepLabel') ? document.getElementById('signPrepLabel').innerText : 'Prepared By',
+        signPrepValue: document.getElementById('signPrepValue') ? document.getElementById('signPrepValue').innerText : '(DIGI SYS)',
+        signAccLabel: document.getElementById('signAccLabel') ? document.getElementById('signAccLabel').innerText : 'Accepted By',
+        signAccValue: document.getElementById('signAccValue') ? document.getElementById('signAccValue').innerText : '(Client)',
+
         sections: sectionsData
       };
     }
@@ -913,6 +937,12 @@
       if (document.getElementById('summaryLocation')) document.getElementById('summaryLocation').value = data.location || '';
       if (document.getElementById('summaryDate')) document.getElementById('summaryDate').value = data.date || '';
       if (document.getElementById('contingencyPercent')) document.getElementById('contingencyPercent').value = data.contingencyPercent !== undefined ? data.contingencyPercent : 5;
+
+      // Restore Signatures Data (With fallback to default)
+      if (document.getElementById('signPrepLabel')) document.getElementById('signPrepLabel').innerText = data.signPrepLabel || 'Prepared By';
+      if (document.getElementById('signPrepValue')) document.getElementById('signPrepValue').innerText = data.signPrepValue || '(DIGI SYS)';
+      if (document.getElementById('signAccLabel')) document.getElementById('signAccLabel').innerText = data.signAccLabel || 'Accepted By';
+      if (document.getElementById('signAccValue')) document.getElementById('signAccValue').innerText = data.signAccValue || '(Client)';
 
       let tbody = document.getElementById('boqBody');
       if (!tbody) return;
